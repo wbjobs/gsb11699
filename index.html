@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>帧缓冲与后处理演示</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="layout">
+    <section class="viewport">
+      <canvas id="gl"></canvas>
+      <div id="banner" class="banner hidden"></div>
+    </section>
+    <aside class="panel">
+      <h1>帧缓冲与后处理</h1>
+
+      <div class="group">
+        <h2>全局</h2>
+        <label class="row">
+          <span>分辨率缩放 <b id="scaleVal">1.00</b></span>
+          <input type="range" id="scale" min="0.25" max="2" step="0.05" value="1">
+        </label>
+        <label class="row">
+          <input type="checkbox" id="singlePass">
+          <span>单通道模式（降级末级，旁路全部中间 FBO）</span>
+        </label>
+        <div class="btns">
+          <button id="btnCtxLoss">模拟上下文丢失</button>
+          <button id="btnOOM">模拟显存不足</button>
+          <button id="btnDegrade">触发真实降级</button>
+          <button id="btnReset">重置参数</button>
+          <button id="btnClearTimings">清除耗时记录</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>通道顺序</h2>
+        <ul id="passOrder" class="order"></ul>
+        <p class="hint">顺序会影响结果：色调映射在辉光之前时，辉光不参与合成。</p>
+      </div>
+
+      <div class="group" id="passParams"></div>
+
+      <div class="group">
+        <h2>统计</h2>
+        <div id="stats" class="stats"></div>
+        <table class="pass-table">
+          <thead>
+            <tr><th>通道</th><th>GPU ms</th><th>CPU ms</th><th>分辨率</th></tr>
+          </thead>
+          <tbody id="passTableBody"></tbody>
+        </table>
+        <div id="vram" class="vram"></div>
+      </div>
+
+      <div class="group">
+        <h2>日志</h2>
+        <div id="log" class="log"></div>
+      </div>
+    </aside>
+  </main>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
